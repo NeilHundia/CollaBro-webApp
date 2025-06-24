@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar.jsx';
+import CreatePost from '../components/CreatePost';
+import CreateProjectForm from '../components/CreateProjectForm';
 import { FaSearch, FaBell, FaUserCircle, FaChevronDown, FaRegHeart, FaRegCommentAlt, FaShareAlt, FaFire, FaInbox } from "react-icons/fa";
 import '../styles/MainFeed.css';
 
@@ -24,6 +26,9 @@ function MainFeed() {
   // State for trending topics
   const [trendingTopics, setTrendingTopics] = useState([]);
   const [isTrendingLoading, setIsTrendingLoading] = useState(true);
+
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [showProjectForm, setShowProjectForm] = useState(false);
 
   useEffect(() => {
     // Fetch user profile data
@@ -202,6 +207,27 @@ function MainFeed() {
     }
   };
 
+  const handleCreatePost = (postData) => {
+    // Here you would typically make an API call to create the post
+    console.log('Creating post:', postData);
+    // After successful post creation, you might want to refresh the feed
+  };
+
+  const handleShowProjectForm = () => {
+    setShowProjectForm(true);
+  };
+
+  const handleCloseProjectForm = () => {
+    setShowProjectForm(false);
+  };
+
+  const handleProjectSubmit = (projectData) => {
+    // Here you would typically make an API call to create the project
+    console.log('Creating project:', projectData);
+    setShowProjectForm(false);
+    // After successful project creation, you might want to refresh the feed
+  };
+
   return (
     <div className="main-feed">
       <Navbar />
@@ -340,6 +366,27 @@ function MainFeed() {
 
         {/* Main Content */}
         <div className="main-content">
+          {/* Create Post Component */}
+          <div className="create-post-container">
+            <CreatePost 
+              user={profile}
+              onCreatePost={handleCreatePost}
+              onShowProjectForm={handleShowProjectForm}
+            />
+          </div>
+
+          {/* Create Project Form Popup */}
+          {showProjectForm && (
+            <div className="create-project-popup">
+              <div className="create-project-popup-content">
+                <CreateProjectForm 
+                  onClose={handleCloseProjectForm}
+                  onSubmit={handleProjectSubmit}
+                />
+              </div>
+            </div>
+          )}
+
           {isFeedLoading ? (
             // Loading state for feed
             <>
