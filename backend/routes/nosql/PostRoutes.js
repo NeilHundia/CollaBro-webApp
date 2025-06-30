@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Notification = require("../models/Notification");
+const Post = require("../../models/Post");
 
 router.post("/", async (req, res) => {
   try {
-    const note = new Notification(req.body);
-    await note.save();
-    res.status(201).json(note);
+    const post = new Post(req.body);
+    await post.save();
+    res.status(201).json(post);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -14,8 +14,8 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const notes = await Notification.find();
-    res.json(notes);
+    const posts = await Post.find();
+    res.json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
