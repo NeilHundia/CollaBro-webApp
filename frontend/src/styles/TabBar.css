@@ -1,0 +1,24 @@
+.tab-bar {
+  display: flex;
+  gap: 20px;
+  padding: 0px 20px;
+  border-radius: 12px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.tab-bar button {
+  font-size: 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 8px 10px;
+  color: #888;
+  font-weight: 500;
+}
+
+.tab-bar .active {
+  color: #6a5acd;
+  font-weight: bold;
+  border-bottom: 2px solid #6a5acd;
+}
