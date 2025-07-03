@@ -1,4 +1,3 @@
-// app.js
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -17,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/UserRoutes"));
 app.use("/api/posts", require("./routes/PostRoutes"));
 app.use("/api/communities", require("./routes/communityRoutes"));
@@ -28,11 +28,41 @@ app.use("/api/plans", require("./routes/planRouts"));
 app.use("/api/subscriptions", require("./routes/subscriptionRoutes"));
 
 // Default route
-app.get("/", (req, res) => {
-  res.send("API is running...");
+app.get("/test", (req, res) => {
+  res.json({ message: "Server is running" });
 });
 
-// Server
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
+// Graceful shutdown
+process.on("SIGINT", async () => {
+  console.log("Received SIGINT. Shutting down gracefully...");
+  try {
+    await mongoose.connection.close();
+    console.log("✅ MongoDB connection closed");
+    server.close(() => {
+      console.log("✅ Express server closed");
+      process.exit(0);
+    });
+  } catch (err) {
+    console.error("❌ Error during shutdown:", err.message);
+    process.exit(1);
+  }
+});
+
+process.on("SIGTERM", async () => {
+  console.log("Received SIGTERM. Shutting down gracefully...");
+  try {
+    await mongoose.connection.close();
+    console.log("✅ MongoDB connection closed");
+    server.close(() => {
+      console.log("✅ Express server closed");
+      process.exit(0);
+    });
+  } catch (err) {
+    console.error("❌ Error during shutdown:", err.message);
+    process.exit(1);
+  }
+});

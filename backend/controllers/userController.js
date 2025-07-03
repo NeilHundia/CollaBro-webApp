@@ -1,8 +1,8 @@
-const User = require("../models/User");
+const UserModel = require("../models/User");
 
 exports.createUser = async (req, res) => {
   try {
-    const user = new User(req.body);
+    const user = new UserModel(req.body);
     await user.save();
     res.status(201).json(user);
   } catch (err) {
@@ -12,7 +12,7 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await UserModel.find();
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -21,7 +21,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await UserModel.findById(req.params.id);
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json(user);
   } catch (err) {
@@ -31,7 +31,7 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const user = await UserModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json(user);
   } catch (err) {
@@ -41,7 +41,7 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await UserModel.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json({ message: "User deleted" });
   } catch (err) {
