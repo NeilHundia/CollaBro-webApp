@@ -8,6 +8,7 @@ import Domains from './pages/onboarding/Domains.jsx'
 import Resume from './pages/onboarding/Resume.jsx'
 import Planner from './pages/Planner.jsx'
 import MainFeed from './pages/MainFeed.jsx'
+import ProfilePage from './pages/Profile.jsx'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/subscribe" element={<Planner />} />
         <Route path="/dashboard" element={<MainFeed />} />
         <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   )
