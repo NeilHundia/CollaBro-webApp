@@ -1,0 +1,25 @@
+.main-feed-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 0;
+}
+
+.pinned-label {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 10px 0 0 6px;
+  color: #333;
+}
+
+.feed-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .main-feed-wrapper {
+    padding: 10px 0;
+  }
+}

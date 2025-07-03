@@ -1,0 +1,42 @@
+.project-box {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-box h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.project-box p {
+  font-size: 14px;
+  color: #555;
+}
+
+.project-image {
+  width: 100%;
+  border-radius: 12px;
+  background: #eee;
+  margin-top: 8px;
+}
+
+.contributors {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.contrib-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
