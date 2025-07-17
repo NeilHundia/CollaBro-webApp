@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Recommendation = require("../models/Recommendation");
+const Recommendation = require("../../models/Recommendation");
 
 router.post("/", async (req, res) => {
   try {

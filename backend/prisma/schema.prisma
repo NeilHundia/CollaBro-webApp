@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("SUPABASE_DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  email         String   @unique
+  fullName      String
+  category      String
+  currentCity   String?
+  university    String?
+  stream        String?
+  bio           String?
+  profilePicture String?
+  resume        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  subscriptions UserSubscription[]
+  communities   CommunityMembership[]
+  connections   UserConnection[] @relation("UserConnections")
+  connectedWith UserConnection[] @relation("UserConnectedWith")
+}
+
+model Plan {
+  id            Int      @id @default(autoincrement())
+  planName      String
+  priceMonthly  Float
+  priceAnnually Float
+  features      String[]
+  isFree        Boolean
+  currency      String
+  subscriptions UserSubscription[]
+}
+
+model UserSubscription {
+  id            Int      @id @default(autoincrement())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        Int
+  plan          Plan     @relation(fields: [planId], references: [id])
+  planId        Int
+  startDate     DateTime
+  endDate       DateTime
+  isActive      Boolean  @default(true)
+  paymentStatus String
+  transactionId String   @unique
+}
+
+model Community {
+  id          Int                   @id @default(autoincrement())
+  name        String                @unique
+  description String?
+  createdAt   DateTime              @default(now())
+  members     CommunityMembership[]
+}
+
+model CommunityMembership {
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  community   Community @relation(fields: [communityId], references: [id])
+  communityId Int
+  joinedAt    DateTime  @default(now())
+
+  @@unique([userId, communityId])
+}
+
+// User connections (friendship, following, etc.)
+model UserConnection {
+  id         Int   @id @default(autoincrement())
+  user       User  @relation("UserConnections", fields: [userId], references: [id])
+  userId     Int
+  connected  User  @relation("UserConnectedWith", fields: [connectedId], references: [id])
+  connectedId Int
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, connectedId])
+}

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Plan = require("../models/Plan");
+const ProjectApplication = require("../../models/ProjectApplication");
 
 router.post("/", async (req, res) => {
   try {
-    const plan = new Plan(req.body);
-    await plan.save();
-    res.status(201).json(plan);
+    const app = new ProjectApplication(req.body);
+    await app.save();
+    res.status(201).json(app);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -14,11 +14,11 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const plans = await Plan.find();
-    res.json(plans);
+    const apps = await ProjectApplication.find();
+    res.json(apps);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-module.exports = router;
+module.exports = router

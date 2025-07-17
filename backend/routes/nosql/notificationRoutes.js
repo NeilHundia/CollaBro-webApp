@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const CollaborationProject = require("../models/CollaborationProject");
+const Notification = require("../../models/Notification");
 
 router.post("/", async (req, res) => {
   try {
-    const project = new CollaborationProject(req.body);
-    await project.save();
-    res.status(201).json(project);
+    const note = new Notification(req.body);
+    await note.save();
+    res.status(201).json(note);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -14,8 +14,8 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const projects = await CollaborationProject.find();
-    res.json(projects);
+    const notes = await Notification.find();
+    res.json(notes);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
